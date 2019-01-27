@@ -46,7 +46,7 @@ function test() {
 test();
 
 app.get('/', (req, res) => {
-  res.send(futPrices);
+  res.send("it's working!");
 });
 
 
