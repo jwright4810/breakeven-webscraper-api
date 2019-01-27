@@ -1,0 +1,23 @@
+{
+  "name": "webscraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
+    "jsdom": "^13.1.0",
+    "nightmare": "^3.0.1",
+    "npm": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
