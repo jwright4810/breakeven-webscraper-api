@@ -18,10 +18,8 @@ let $ = jQuery = require('jquery')(window);
 let futPrices = {};
 
 
-app.get('/', (req, res) => {
-//   res.send('it is working');
-  
-  nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
+(function () {
+    nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
     .wait(2000)
     .evaluate(function(){
 
@@ -40,10 +38,14 @@ app.get('/', (req, res) => {
         for(let props in result) {
             futPrices[props] = result[props]; 
         }
-        res.json(futPrices)     
+        console.log('scraper executed');
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => console.log(err))
+})(); 
 
+app.get('/', (req, res) => {
+//   res.send('it is working');
+    res.json(futPrices)
 })  
 
 
