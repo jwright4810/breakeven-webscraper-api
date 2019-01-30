@@ -18,8 +18,10 @@ let $ = jQuery = require('jquery')(window);
 let futPrices = {};
 
 
-function test() {
-    nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
+app.get('/', (req, res) => {
+//   res.send('it is working');
+  
+  nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
     .wait(2000)
     .evaluate(function(){
 
@@ -34,33 +36,30 @@ function test() {
         return futObj; 
     })
     .end()
-    .then(function(result){
+    .then(result => {
         for(let props in result) {
             futPrices[props] = result[props]; 
-        }  
-        
-        console.log('did work');
-    }); 
-}
-    
+        }
+        res.json(futPrices)     
+    })
+    .catch(err => res.status(400).json(err))
 
-  test();
-app.get('/', (req, res) => {
-  res.send('it is working');
+})  
 
-});
 
 app.get('/setprices', (req, res) => {
-    res.send(futPrices)
+    res.json(futPrices)
 })
 
 
 
-app.listen(process.env.PORT || 3000, () => {
+// app.listen(process.env.PORT || 3000, () => {
+//     console.log('app is running on port 3000'); 
+// })
+                     
+app.listen( 3001, () => {
     console.log('app is running on port 3000'); 
 })
-                     
-
     
 
 
