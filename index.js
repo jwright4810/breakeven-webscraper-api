@@ -18,34 +18,33 @@ let $ = jQuery = require('jquery')(window);
 let futPrices = {};
 
 
-(function () {
-    nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
-    .wait(2000)
-    .evaluate(function(){
 
-        const futObj = {}; 
-        
-        let rows = document.getElementById('quotesFuturesProductTable1').rows;
-        
-        for(let i = 1; i < rows.length; i++) {
-           futObj[rows[i].cells[1].innerText] = rows[i].cells[3].innerText;  
-        }
-        
-        return futObj; 
-    })
-    .end()
-    .then(result => {
-        for(let props in result) {
-            futPrices[props] = result[props]; 
-        }
-        console.log('scraper executed');
-    })
-    .catch(err => console.log(err))
-})(); 
 
 app.get('/', (req, res) => {
-//   res.send('it is working');
-    res.json(futPrices)
+    (function () {
+        nightmare.goto('https://www.cmegroup.com/trading/agricultural/livestock/feeder-cattle_quotes_globex.html')
+        .wait(2000)
+        .evaluate(function(){
+    
+            const futObj = {}; 
+            
+            let rows = document.getElementById('quotesFuturesProductTable1').rows;
+            
+            for(let i = 1; i < rows.length; i++) {
+               futObj[rows[i].cells[1].innerText] = rows[i].cells[3].innerText;  
+            }
+            
+            return futObj; 
+        })
+        .end()
+        .then(result => {
+            for(let props in result) {
+                futPrices[props] = result[props]; 
+            }
+            res.json('scraper executed')
+        })
+        .catch(err => console.log(err))
+    })(); 
 })  
 
 
